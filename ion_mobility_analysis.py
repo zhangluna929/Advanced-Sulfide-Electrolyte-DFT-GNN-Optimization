@@ -38,6 +38,75 @@ temperature_range = np.arange(300, 601, 50)  # 温度范围：300K到600K
 # 初始化数据存储
 data = []
 
+# 模拟CI-NEB方法计算Li扩散路径
+def calculate_li_diffusion_path_ci_neb(material, dopant, concentration, position, temperature):
+    # 模拟使用CI-NEB方法计算Li离子在硫化物固态电解质中的扩散路径
+    num_images = 9  # 假设使用9个图像点来描述路径，增加点数以提高精度
+    
+    # 初始状态和最终状态之间的距离（Angstrom）
+    base_path_length = np.random.uniform(2.5, 5.5) * (1 + 0.15 * (concentration / 0.15))
+    
+    # 模拟扩散能垒 (eV)，基于材料和掺杂特性
+    base_barrier = np.random.uniform(0.15, 0.9) * (1 - 0.35 * (concentration / 0.15))
+    temp_effect = np.exp(-0.012 * (temperature - 300) / 300)
+    dopant_effect = 1.0 if dopant in ['Mg', 'Ca', 'Sr', 'Ba'] else 1.2
+    position_effect = 0.9 if position == 'Li-site' else 1.1
+    diffusion_barrier = base_barrier * temp_effect * dopant_effect * position_effect
+    
+    # 模拟路径能量曲线，表示从初始到过渡态再到最终状态的能量变化
+    energy_profile = [0.0]
+    transition_state_index = num_images // 2
+    for i in range(1, num_images - 1):
+        if i < transition_state_index:
+            energy = diffusion_barrier * (1 - ((i - transition_state_index) / transition_state_index)**2)
+        elif i == transition_state_index:
+            energy = diffusion_barrier
+        else:
+            energy = diffusion_barrier * (1 - ((i - transition_state_index) / (num_images - transition_state_index - 1))**2)
+        energy += np.random.uniform(-0.02, 0.02) * diffusion_barrier
+        energy_profile.append(energy)
+    energy_profile.append(0.0)
+    
+    # 模拟CI-NEB计算中的“爬坡”过程，调整过渡态能量
+    climbing_energy_adjustment = np.random.uniform(-0.05, 0.05) * diffusion_barrier
+    energy_profile[transition_state_index] += climbing_energy_adjustment
+    diffusion_barrier = max(energy_profile)
+    
+    # 模拟扩散速率 (Hz)，基于Arrhenius关系
+    k_b = 1.38e-23  # 玻尔兹曼常数，单位：J/K
+    h = 6.626e-34  # 普朗克常数，单位：J·s
+    attempt_frequency = 1e13 * (1 + 0.2 * (temperature - 300) / 300)
+    diffusion_rate = attempt_frequency * np.exp(-diffusion_barrier * 1.602e-19 / (k_b * temperature))
+    
+    # 模拟路径的几何特性
+    path_length = base_path_length * (1 + 0.1 * (diffusion_barrier / 0.5))
+    
+    # 模拟CI-NEB计算中的力收敛性
+    max_force_per_image = np.random.uniform(0.01, 0.05) * (1 + 0.3 * (concentration / 0.15))
+    convergence_criterion = 0.03  # 收敛标准为0.03 eV/Angstrom
+    is_path_converged = max_force_per_image <= convergence_criterion
+    
+    # 模拟路径对称性
+    path_symmetry_index = np.random.uniform(0.7, 1.0) * (1 - 0.2 * (concentration / 0.15))
+    
+    # 模拟局部环境对扩散路径的影响
+    local_coordination_change = np.random.uniform(-1.0, 1.0) * (1 + 0.3 * (concentration / 0.15))
+    
+    # 模拟声子耦合对扩散的影响
+    phonon_ion_coupling = np.random.uniform(0.1, 0.8) * (1 - 0.2 * (diffusion_barrier / 0.5))
+    
+    return {
+        'diffusion_barrier_ci_neb': diffusion_barrier,
+        'path_length_ci_neb': path_length,
+        'energy_profile_ci_neb': energy_profile,
+        'diffusion_rate_ci_neb': diffusion_rate,
+        'max_force_per_image_ci_neb': max_force_per_image,
+        'is_path_converged_ci_neb': is_path_converged,
+        'path_symmetry_index_ci_neb': path_symmetry_index,
+        'local_coordination_change_ci_neb': local_coordination_change,
+        'phonon_ion_coupling_ci_neb': phonon_ion_coupling
+    }
+
 # 模拟DFT计算离子迁移率
 for material in materials:
     for dopant in dopants:
@@ -91,26 +160,37 @@ for material in materials:
                     # 模拟声子散射率 (无单位)
                     phonon_scattering_rate = np.random.uniform(0.1, 2.0) * (1 - 0.3 * conductivity_factor) * (1 + 0.02 * (temp - 300) / 300)
                     
-                    # 记录数据
+                    # 使用CI-NEB方法计算Li扩散路径
+                    ci_neb_results = calculate_li_diffusion_path_ci_neb(material, dopant, conc, pos, temp)
+                    
                     data.append({
                         'Material': material,
                         'Dopant': dopant,
                         'Concentration': conc,
                         'Position': pos,
-                        'Temperature_K': temp,
-                        'Ion_Mobility_cm2_Vs': ion_mobility,
+                        'Temperature': temp,
+                        'Ion_Mobility': ion_mobility,
                         'Conductivity_Factor': conductivity_factor,
-                        'Diffusion_Barrier_eV': diffusion_barrier,
-                        'Jump_Frequency_Hz': jump_frequency,
-                        'Path_Length_Angstrom': path_length,
+                        'Diffusion_Barrier': diffusion_barrier,
+                        'Jump_Frequency': jump_frequency,
+                        'Path_Length': path_length,
                         'Ion_Phonon_Coupling': ion_phonon_coupling,
                         'Local_Distortion_Index': local_distortion_index,
-                        'Channel_Volume_Change_Percent': channel_volume_change,
-                        'Defect_Ion_Interaction_eV': defect_ion_interaction,
-                        'Entropy_Change_J_molK': entropy_change,
-                        'Enthalpy_Change_kJ_mol': enthalpy_change,
-                        'Gibbs_Free_Energy_kJ_mol': gibbs_free_energy,
-                        'Phonon_Scattering_Rate': phonon_scattering_rate
+                        'Channel_Volume_Change': channel_volume_change,
+                        'Defect_Ion_Interaction': defect_ion_interaction,
+                        'Entropy_Change': entropy_change,
+                        'Enthalpy_Change': enthalpy_change,
+                        'Gibbs_Free_Energy': gibbs_free_energy,
+                        'Phonon_Scattering_Rate': phonon_scattering_rate,
+                        'Diffusion_Barrier_CI_NEB': ci_neb_results['diffusion_barrier_ci_neb'],
+                        'Path_Length_CI_NEB': ci_neb_results['path_length_ci_neb'],
+                        'Energy_Profile_CI_NEB': ci_neb_results['energy_profile_ci_neb'],
+                        'Diffusion_Rate_CI_NEB': ci_neb_results['diffusion_rate_ci_neb'],
+                        'Max_Force_Per_Image_CI_NEB': ci_neb_results['max_force_per_image_ci_neb'],
+                        'Is_Path_Converged_CI_NEB': ci_neb_results['is_path_converged_ci_neb'],
+                        'Path_Symmetry_Index_CI_NEB': ci_neb_results['path_symmetry_index_ci_neb'],
+                        'Local_Coordination_Change_CI_NEB': ci_neb_results['local_coordination_change_ci_neb'],
+                        'Phonon_Ion_Coupling_CI_NEB': ci_neb_results['phonon_ion_coupling_ci_neb']
                     })
 
 # 创建DataFrame
