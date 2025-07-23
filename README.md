@@ -1,5 +1,6 @@
 # 硫化物电解质 **DFT-GNN 智能筛选、设计与决策平台**  
 # DFT-GNN Intelligent Screening, Design & Decision Platform for Sulfide Electrolytes
+> **版本**: 5.3  **作者**: Luna Zhang  **项目建立**：2023-02-19  **最后更新**: 2025-07-23
 
 ## 项目简介 (Project Description)
 
@@ -110,10 +111,6 @@ export VASP_CMD="/path/to/vasp_std"
 ## 许可证 (License)
 
 本项目采用 **MIT License**，详见 `LICENSE` 文件。
-
-## 作者 (Author Information)
-**Luna Zhang**  
-
 ## 项目拓展 (Future Work)
 
 * **实验验证**：与合作实验室联合合成并测试 Top-5 预测结构。
