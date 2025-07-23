@@ -1,0 +1,13 @@
+numpy>=1.23
+pandas>=1.5
+matplotlib>=3.7
+seaborn>=0.12
+scikit-learn>=1.2
+tqdm>=4.65
+torch>=2.0
+# 以下为 PyTorch Geometric 及其依赖，需根据 CUDA 版本选择对应 whl
+torch-geometric>=2.3
+torch-scatter>=2.1
+torch-sparse>=0.6
+torch-cluster>=1.6
+torch-spline-conv>=1.2 
