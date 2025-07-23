@@ -1,13 +1,9 @@
-# Advanced Sulfide Electrolyte Design via Integrated DFT-GNN Workflow
+# 硫化物电解质 **DFT-GNN 智能筛选、设计与决策平台**  
+# DFT-GNN Intelligent Screening, Design & Decision Platform for Sulfide Electrolytes
 
-## 1. 项目标题 (Project Title)
+## 项目简介 (Project Description)
 
-硫化物电解质 **DFT-GNN 智能筛选、设计与决策平台**  
-DFT-GNN Intelligent Screening, Design & Decision Platform for Sulfide Electrolytes
-
-## 2. 项目简介 (Project Description)
-
-本平台面向下一代固态锂电池核心瓶颈——硫化物固态电解质的离子输运与热力学稳定性——构建了一个跨尺度、多保真、多策略的自主材料发现体系：
+本平台面向下一代固态锂电池核心瓶颈——硫化物固态电解质的离子输运与热力学稳定性——构建了一个跨尺度、多保真、多策略的智能材料筛选与设计综合系统：
 
 1. 以 *ab initio* 量子计算为“高保真机理源”，在原子尺度解析掺杂-缺陷-晶格三耦合对能垒与电荷分布的微观起因；
 2. 以图神经网络为“经验萃取器”，通过物理先验嵌入与不确定性量化，将稀疏高成本数据映射为连续性能景观；
@@ -16,7 +12,6 @@ DFT-GNN Intelligent Screening, Design & Decision Platform for Sulfide Electrolyt
 
 该系统在 ~10^4 级掺杂空间内实现了三个数量级的搜索加速，理论与数据双重收敛下输出可立即用于实验检验的候选集合，为面向功能陶瓷的“智能设计”范式提供了可复制蓝本。
 
-**English Version**  
 Targeting the critical bottlenecks of next-generation solid-state Li batteries—ionic transport and thermo-structural stability of sulfide electrolytes—this platform establishes an autonomous materials-discovery framework that integrates multi-fidelity physics and data-driven intelligence:
 
 1. *Ab initio* quantum calculations serve as a high-fidelity mechanistic source, resolving the microscopic origins of dopant–defect–lattice coupling on diffusion barriers and charge distribution.
@@ -28,7 +23,7 @@ Across a compositional space of ~10^4 doped configurations the system delivers a
 
 ---
 
-## 3. 方法论 (Methodology)
+## 方法论 (Methodology)
 
 | 步骤 | 说明 / Description |
 |---------|------------------|
@@ -42,7 +37,7 @@ Across a compositional space of ~10^4 doped configurations the system delivers a
 
 ---
 
-## 4. 功能与亮点 (Features and Highlights)
+## 功能与亮点 (Features and Highlights)
 
 * **全面掺杂空间扫描**：10 种母体材料 × 15 元素 × 15 浓度 × 4 晶格位点 ≈ *9,000* 结构。
 * **自动化 DFT 工作流**：VASP-PBE + DFT-D3，力/能量双收敛判据，85 % 收敛率，结果实时落库。
@@ -52,17 +47,17 @@ Across a compositional space of ~10^4 doped configurations the system delivers a
 * **DFT-GNN 协同工作流**：高保真计算与预测闭环。
 * **智能决策模块**：基于不确定性主动学习，动态分配 DFT 资源。
 
-## 5. 智能决策流程 (Intelligent Decision Workflow)
+## 智能决策流程 (Intelligent Decision Workflow)
 1. `train_gnn_model.py` 训练模型并输出带不确定性的预测 (`results/doping_predictions.csv`)。
 2. `auto_pipeline.py --decision --top 50` 调用 `intelligent_decision` 计算综合得分，输出 `results/intelligent_ranking.csv`。
 3. 根据排名自动生成下一批 VASP 输入，提交至 HPC。
 4. 新的 DFT 结果回流数据集，再训练 GNN——完成闭环优化。
 
-## 6. 使用方法 (Usage)
+## 使用方法 (Usage)
 
 | 智能决策 | `python auto_pipeline.py --decision --top 50` | 选出下一批候选结构 |
 
-## 7. 技术栈 (Technologies Used)
+## 技术栈 (Technologies Used)
 
 | 范畴 | 具体工具 | 说明 |
 |------|----------|------|
@@ -72,7 +67,7 @@ Across a compositional space of ~10^4 doped configurations the system delivers a
 | 可视化 | Matplotlib, Seaborn | 统计图与热力图 |
 | 自动化 | tqdm, argparse | 批处理进度与 CLI 接口 |
 
-## 6. 安装与配置 (Installation and Setup)
+## 安装与配置 (Installation and Setup)
 
 ```bash
 # 1. 克隆仓库
@@ -90,13 +85,12 @@ $ pip install -r requirements.txt  # 如未提供，请参考 /docs/requirements
 $ pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 $ pip install torch-geometric torch-scatter torch-sparse torch-cluster torch-spline-conv -f https://data.pyg.org/whl/torch-2.0.1+cpu.html
 
-# 4. (可选) 配置 VASP
+# (可选) 配置 VASP
 export VASP_CMD="/path/to/vasp_std"
 ```
-
 > **注意**：VASP 需合法授权；若仅复现 GNN 部分，可跳过第 4 步。
 
-## 7. 数据与实验 (Data and Experiments)
+## 数据与实验 (Data and Experiments)
 
 | 指标 / Metric | 结果 / Result |
 |----------------|--------------|
@@ -113,23 +107,25 @@ export VASP_CMD="/path/to/vasp_std"
 
 ---
 
-## 8. 许可证 (License)
+## 许可证 (License)
 
 本项目采用 **MIT License**，详见 `LICENSE` 文件。
 
-## 9. 联系方式与作者信息 (Contact and Author Information)
+## 作者 (Author Information)
+**Luna Zhang**  
 
-作者：**Luna Zhang**  
-
-## 10. 未来的工作 (Future Work)
+## 项目拓展 (Future Work)
 
 * **实验验证**：与合作实验室联合合成并测试 Top-5 预测结构。
 * **HSE-DFT 精修**：提升电子结构精度，校正带隙偏差。
 * **自监督预训练**：在 Materials Project 400 k+ 图数据库上进行编码器预训练。
 * **界面工程拓展**：将框架迁移到固-固界面与外延薄膜应力调控场景。
+* **Experimental validation**: Co‑synthesize and test the top 5 predicted structures in collaboration with partner laboratories.
+* **HSE‑DFT refinement**: Enhance electronic‑structure accuracy and correct band‑gap deviations.
+* **Self‑supervised pre‑training**: Pre‑train the encoder on the 400 k+ graph database from the Materials Project.
+* **Interface‑engineering extension**: Adapt the framework to solid–solid interfaces and epitaxial thin‑film strain‑tuning scenarios.
 
-## 11. 项目结构 (Project Structure)
-
+## 项目结构 (Project Structure)
 ```
 DFT-GNN Intelligent Screening, Design & Decision Platform for Sulfide Electrolytes/
 ├── auto_pipeline.py               # 高通量筛选入口
