@@ -31,7 +31,7 @@ Across a compositional space of ~10^4 doped configurations the system delivers a
 ## 3. 方法论 (Methodology)
 
 | 步骤 | 说明 / Description |
-|------|------------------|
+|---------|------------------|
 | ① 结构生成 | 基于对称性算法构造 10 种母相 + 15 元素 × 15 浓度 × 4 位点 ≈ 9 000 结构；Symmetry-aware enumeration yields ~9 000 derived structures from 10 parent phases, 15 dopants, 15 concentrations and 4 crystallographic sites. |
 | ② DFT 计算 | VASP-PBE-D3，EDIFF 1e-6 eV，EDIFFG −0.02 eV/Å，K-mesh 4×4×4；CI-NEB 解析扩散路径；VASP-PBE-D3 for relaxation/band/NEB with EDIFF 1e-6 eV, EDIFFG −0.02 eV/Å, 4×4×4 k-mesh. |
 | ③ 特征构造 | 提取节点（Z, electronegativity, radius）与边（距离、键序）33 维特征，标准化后写入 `data/graph_data.json`; 33-dim node/edge features standardised and serialised. |
@@ -120,7 +120,6 @@ export VASP_CMD="/path/to/vasp_std"
 ## 9. 联系方式与作者信息 (Contact and Author Information)
 
 作者：**Luna Zhang**  
-（为避免垃圾邮件，此处不公开联系方式）
 
 ## 10. 未来的工作 (Future Work)
 
