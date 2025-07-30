@@ -1,4 +1,4 @@
-# 硫化物DFTGNN: 大规模硫化物晶体电化学性能预测的高通量图神经网络框架
+# 硫化物DFTGNN: 硫化物晶体电化学性能预测的高通量图神经网络模型
 # Sulfide-DFTGNN: A High-Throughput Graph Neural Network Framework for Large-Scale Electromechanical Property Prediction of Sulfide Crystals
 
 ## 1. 项目介绍 / Project Overview
