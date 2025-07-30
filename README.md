@@ -82,19 +82,3 @@ snakemake -j 16 --config input_dir=vasp_runs epochs=100
 # Monte Carlo 推理
 python infer_mc.py --model_path models/best_model.pth --data_root data/gnn_data --output results/pred.csv
 ```
-
-## 11. 引用 / Citation
-如果本项目对您的研究有帮助，请引用：
-If you find this repository useful, please cite:
-```
-@misc{SulfideDFTGNN2025,
-  title  = {Sulfide-DFTGNN: High-Throughput GNN Screening of Sulfide Conductors},
-  author = {Your Name and Contributors},
-  year   = {2025},
-  url    = {https://github.com/your_repo/sulfide-dftgnn}
-}
-```
-
----
-由科研与工程团队联合开发，欢迎 Issues / PR 合作。
-Developed jointly by research and engineering teams; contributions are welcome via Issues or PRs.
